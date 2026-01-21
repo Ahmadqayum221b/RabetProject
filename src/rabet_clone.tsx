@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, , Mail, Plus, Gift, Users,  ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock,  Trophy, Link, Share2, AlertTriangle } from 'lucide-react';
+import { X , Mail, Plus, Gift, Users,  ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock,  Trophy, Link, Share2, AlertTriangle } from 'lucide-react';
 
 export default function RabetClone() {
   const [showBanner, setShowBanner] = useState(true);
