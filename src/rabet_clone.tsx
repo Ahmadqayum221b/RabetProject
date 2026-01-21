@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X,  Mail, Plus, Gift, Users,  ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock, Trophy, Link, Share2, AlertTriangle } from 'lucide-react';
+import { X, Menu, Mail, Plus, Gift, Users, Calendar, ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock, Download, Trophy, Link, Share2, AlertTriangle } from 'lucide-react';
 
 export default function RabetClone() {
   const [showBanner, setShowBanner] = useState(true);
@@ -13,6 +13,8 @@ export default function RabetClone() {
   const [showAgentRules, setShowAgentRules] = useState(false);
   const [showMailPanel, setShowMailPanel] = useState(false);
   const [showJackpots, setShowJackpots] = useState(false);
+  const [showWithdrawPanel, setShowWithdrawPanel] = useState(false);
+  const [showAgentRewardPopup, setShowAgentRewardPopup] = useState(true);
   const [hasSeenAgentReward, setHasSeenAgentReward] = useState(false);
 
   useEffect(() => {
@@ -1609,102 +1611,149 @@ export default function RabetClone() {
 
       {activeTab === 'agent' && !hasSeenAgentReward && (
         <div
-          className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-md px-4"
-          onClick={() => {
-            setHasSeenAgentReward(true);
-            // Optional: localStorage.setItem('agentRewardSeen', 'true');
-          }}
+          className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+          onClick={() => setHasSeenAgentReward(true)}
         >
           <div
-            className="relative w-full max-w-md bg-gradient-to-br from-purple-950 via-indigo-950 to-purple-900 
-                 rounded-3xl shadow-2xl overflow-hidden border border-purple-600/40
-                 animate-in fade-in zoom-in-95 duration-300"
+            className="relative w-full max-w-[360px] flex flex-col items-center animate-in fade-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button – bigger touch target */}
+            {/* Close button Top Right */}
             <button
               onClick={() => setHasSeenAgentReward(true)}
-              className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center 
-                   text-white/80 hover:text-white bg-black/40 rounded-full"
+              className="absolute -top-12 right-0 z-10 w-10 h-10 flex items-center justify-center text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 rounded-full border border-white/20"
             >
-              <X size={24} />
+              <X size={28} strokeWidth={3} />
             </button>
 
-            <div className="p-7 pt-12 pb-9 text-center">
-              {/* Top badges */}
-              <div className="mb-6 flex flex-col items-center gap-3">
-                <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 
-                          rounded-full text-white font-bold shadow-lg text-base">
-                  <span>₹5/person</span>
-                  <span className="opacity-80">•</span>
-                  <span>+10%</span>
-                </div>
-                <p className="text-purple-300 text-sm">
-                  Get ₹5 per invite + up to 10% commission
-                </p>
-              </div>
+            {/* Header Section (Deep Purple) */}
+            <div className="w-full bg-[#6d28d9] rounded-t-[2.5rem] pt-10 pb-10 flex flex-col items-center relative overflow-visible border-x-[6px] border-t-[6px] border-[#c084fc]/20 shadow-[0_-20px_50px_rgba(109,40,217,0.3)]">
+              {/* Decorative Stars and Sparkles */}
+              <div className="absolute -left-3 top-12 text-pink-400 text-2xl animate-pulse">✦</div>
+              <div className="absolute -right-2 top-24 text-white text-xl animate-bounce">✧</div>
+              <div className="absolute left-1/4 -top-4 text-purple-200 text-xl">✦</div>
 
-              <h2 className="text-3xl font-extrabold text-white mb-2 tracking-tight">
+              {/* Title */}
+              <h2 className="text-[26px] font-black text-white tracking-tight mb-2 leading-none">
                 New Agent Reward
               </h2>
-              <p className="text-yellow-400 font-bold text-xl mb-8">
-                Super Agent Activated! 🎉💰
-              </p>
 
-              {/* Main reward card */}
-              <div className="bg-gradient-to-br from-purple-800/60 to-indigo-800/60 rounded-2xl p-6 mb-7 border border-purple-500/30">
-                <div className="flex justify-between items-center mb-5">
-                  <div className="text-left">
-                    <p className="text-purple-200 text-sm mb-1">Current</p>
-                    <p className="text-white font-bold text-lg">
-                      Commission Rate <span className="text-cyan-300">10%</span>
-                    </p>
-                    <p className="text-purple-200 text-sm mt-2">
-                      Invitation Reward <span className="text-yellow-300">₹5/person</span>
-                    </p>
-                  </div>
-                  <div className="text-5xl opacity-90">💰</div>
-                </div>
-
-                {/* Before → After arrow */}
-                <div className="flex items-center justify-center gap-4 my-6">
-                  <div className="text-center">
-                    <p className="text-purple-200 text-sm">Before</p>
-                    <p className="text-white text-2xl font-bold">10%</p>
-                  </div>
-
-                  <div className="text-5xl text-yellow-400">→</div>
-
-                  <div className="text-center bg-gradient-to-r from-yellow-600/40 to-orange-600/40 
-                            rounded-xl px-6 py-4 flex-1">
-                    <p className="text-yellow-200 font-bold text-xl">After claim</p>
-                    <p className="text-white text-3xl font-black">50%</p>
-                    <p className="text-yellow-300 font-bold mt-1">₹20/person</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    // Here you would normally call an API to claim the reward
-                    // For demo:
-                    alert("Reward claimed! Your commission rate is now upgraded.");
-                    setHasSeenAgentReward(true);
-                    // Optional: localStorage.setItem('agentRewardSeen', 'true');
-                  }}
-                  className="w-full mt-4 bg-gradient-to-r from-green-600 to-emerald-600 
-                       hover:from-green-500 hover:to-emerald-500 
-                       text-white font-bold py-4 rounded-2xl shadow-lg 
-                       transition-all text-lg active:scale-98"
-                >
-                  Receive Reward
-                </button>
+              {/* Status Pill */}
+              <div className="bg-[#fb2c8d] px-5 py-1.5 rounded-full shadow-[0_5px_15px_rgba(251,44,141,0.4)] border border-white/20">
+                <span className="text-white font-black text-[12px] italic uppercase tracking-wider">
+                  Super agent activated!
+                </span>
               </div>
 
-              {/* Small stats footer */}
-              <div className="text-purple-300 text-sm flex justify-center gap-8">
-                <div>Team Deposit: <span className="text-white font-medium">₹0</span></div>
-                <div>Invites: <span className="text-white font-medium">0</span></div>
+              {/* Gold Bag Illustration Area */}
+              <div className="absolute -right-8 -top-10 w-48 h-48 pointer-events-none z-20">
+                <div className="relative w-full h-full flex items-center justify-center">
+                  {/* The Bag Styling (Simplified CSS + Emoji version for high impact) */}
+                  <div className="relative">
+                    <span className="text-9xl drop-shadow-[0_15px_15px_rgba(0,0,0,0.4)] select-none">💰</span>
+                    {/* Floating elements from the bag */}
+                    <div className="absolute top-2 right-0 text-3xl animate-bounce [animation-delay:-0.5s]">🪙</div>
+                    <div className="absolute -top-4 left-4 text-3xl animate-bounce">🪙</div>
+                    <div className="absolute -top-6 -left-4 text-2xl rotate-12">🎉</div>
+                    <div className="absolute bottom-10 -right-4 text-2xl animate-pulse">✨</div>
+                    <div className="absolute top-1/2 -right-8 text-blue-400 text-xl animate-spin-slow">✦</div>
+                    <div className="absolute top-1/4 -left-10 text-green-400 text-xl">✨</div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Inner Content Card (White) */}
+            <div className="w-full bg-white rounded-[2.5rem] -mt-6 relative z-10 p-5 flex flex-col gap-4 shadow-2xl border-x-[6px] border-b-[6px] border-[#c084fc]/20">
+              {/* Connecting Metal Rings */}
+              <div className="absolute -top-[22px] left-12 flex flex-col gap-1.5 pointer-events-none">
+                <div className="w-3 h-7 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border border-purple-400 shadow-sm"></div>
+              </div>
+              <div className="absolute -top-[22px] right-12 flex flex-col gap-1.5 pointer-events-none">
+                <div className="w-3 h-7 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border border-purple-400 shadow-sm"></div>
+              </div>
+
+              {/* Current Reward Box (Teal/Mint) */}
+              <div className="bg-[#e0fbef] rounded-3xl p-5 border border-[#a7f3d0]/50 relative overflow-hidden">
+                <div className="inline-flex items-center gap-2 bg-[#14b8a6] text-white px-3 py-1.5 rounded-xl text-[13px] font-black mb-4 shadow-sm">
+                  <span className="text-base text-yellow-300">👑</span> Current
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5 text-[#0d9488] font-black text-sm">
+                      <div className="w-6 h-6 bg-[#14b8a6]/20 rounded-lg flex items-center justify-center text-base">⚡</div>
+                      Current Commission Rate
+                    </div>
+                    <span className="text-[#0d9488] font-black text-base">10%</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-[#14b8a6]/10 pt-2">
+                    <div className="flex items-center gap-2.5 text-[#0d9488] font-black text-sm">
+                      <div className="w-6 h-6 bg-[#14b8a6]/20 rounded-lg flex items-center justify-center text-base">👤</div>
+                      Invitation Reward
+                    </div>
+                    <span className="text-[#0d9488] font-black text-base">₹5/person</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Target Reward Box (Orange/Yellow - After Claim) */}
+              <div className="bg-gradient-to-b from-[#ffa31a] via-[#ff8c00] to-[#ff5100] rounded-[2rem] p-5 relative overflow-hidden shadow-[inset_0_2px_10px_rgba(255,255,255,0.3)] group">
+                {/* Background Dots/Pattern */}
+                <div className="absolute top-4 left-4 grid grid-cols-3 gap-1 opacitiy-30">
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                  <div className="w-1 h-1 bg-white/40 rounded-full"></div>
+                </div>
+
+                <div className="inline-flex items-center gap-2 text-white/95 font-black text-lg mb-2 relative z-10 px-1">
+                  <span className="text-xl">👑</span> After claim
+                </div>
+
+                <div className="flex items-center justify-center gap-4 mb-4 relative z-10">
+                  <div className="text-6xl drop-shadow-md drop-shadow-white/20">💵</div>
+                  <span className="text-white text-[56px] font-black italic tracking-tighter drop-shadow-2xl">₹50</span>
+                </div>
+
+                <div className="space-y-3 relative z-10 px-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5 text-[#4a2400]/80 font-black text-[13px]">
+                      <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center text-base text-white">⚡</div>
+                      Current Commission Rate
+                    </div>
+                    <span className="text-white font-black text-xl">50%</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-white/10 pt-2">
+                    <div className="flex items-center gap-2.5 text-[#4a2400]/80 font-black text-[13px]">
+                      <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center text-base text-white">👤</div>
+                      Invitation Reward
+                    </div>
+                    <span className="text-white font-black text-xl">₹20/person</span>
+                  </div>
+                </div>
+
+                {/* Big Glossy Arrow pointing up/right */}
+                <div className="absolute bottom-4 -right-1 opacity-90 select-none pointer-events-none transform -rotate-12 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
+                  <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                    <path d="M20 80L75 25M75 25H40M75 25V60" stroke="white" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" opacity="0.3" />
+                    <path d="M20 80L75 25M75 25H40M75 25V60" stroke="#ffd900" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_15px_rgba(255,217,0,0.8)]" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Main Receive Button */}
+              <button
+                onClick={() => {
+                  alert("Super Agent Status Activated! Rewards claimed.");
+                  setHasSeenAgentReward(true);
+                }}
+                className="w-full bg-gradient-to-r from-[#2ee69c] via-[#10b981] to-[#34d399] hover:brightness-110 text-white font-black py-4 rounded-2xl text-[28px] shadow-[0_10px_20px_rgba(16,185,129,0.3)] transition-all active:scale-95 leading-none mt-2"
+              >
+                Receive
+              </button>
             </div>
           </div>
         </div>
