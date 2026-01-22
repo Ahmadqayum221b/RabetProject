@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Mail, Plus, Gift, Users, ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock, Download, Trophy, Link, Share2, AlertTriangle, Info, Star } from 'lucide-react';
+import { X, Plus, Gift, Users, ChevronRight, ChevronLeft, LogOut, Globe, ClipboardCheck, Wallet, Clock, Trophy, Link, Share2, Info, Star } from 'lucide-react';
 
 export default function RabetClone() {
   const [showBanner, setShowBanner] = useState(true);
@@ -13,8 +13,6 @@ export default function RabetClone() {
   const [showAgentRules, setShowAgentRules] = useState(false);
   const [showMailPanel, setShowMailPanel] = useState(false);
   const [showJackpots, setShowJackpots] = useState(false);
-  const [showWithdrawPanel, setShowWithdrawPanel] = useState(false);
-  const [showAgentRewardPopup, setShowAgentRewardPopup] = useState(true);
   const [hasSeenAgentReward, setHasSeenAgentReward] = useState(false);
 
   useEffect(() => {
